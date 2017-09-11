@@ -1,0 +1,22 @@
+<md-sidenav-container fullscreen>
+  <md-sidenav #menu>
+      <md-nav-list>
+          <a md-list-item routerLink="/persons" (click)="menu.close()">Persons</a>
+          <a md-list-item routerLink="/pages" (click)="menu.close()">Pages</a>
+          <a md-list-item routerLink="/imgurs" (click)="menu.close()">Imgurs</a>
+          <a md-list-item routerLink="/landings" (click)="menu.close()">Landings</a>
+          <a md-list-item routerLink="/queue" (click)="menu.close()">Queue</a>
+          <a md-list-item routerLink="/configs" (click)="menu.close()">Configs</a>
+      </md-nav-list>
+      <hr>
+      <button md-button (click)="menu.close()">CLOSE</button>
+  </md-sidenav>
+  <md-toolbar color="primary">
+      <button md-icon-button (click)="menu.open()">
+      <md-icon>menu</md-icon>
+  </button> {{ title }}
+  </md-toolbar>
+  <div class="main-content">
+      <router-outlet></router-outlet>
+  </div>
+</md-sidenav-container>

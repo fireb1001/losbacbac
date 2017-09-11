@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.buttons-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+md-card {
+    margin: 18px;
+}
+
+.card-header-image {
+    
+}
+
+.editable-txt {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #767d32;
+}
+
+.full-width {
+    width: 100%;
+}

@@ -1,0 +1,25 @@
+<md-input-container class="example-full-width">
+  <input mdInput placeholder="New Imgur"  [(ngModel)]="imgur_val" >
+</md-input-container>
+
+<button md-raised-button (click)="new_imgur(imgur_val)">Add</button>
+
+<md-slide-toggle  (ngModelChange)="operator_togg_change($event)" [ngModel]="operator_togg"> Show In-Active </md-slide-toggle>
+
+<md-card  *ngFor="let imgur of imgurs | async | reverse | listItemAttr : {key:'active',value: 'off', operator: operator} ">
+  <md-card-header [routerLink]="">
+    <md-card-title>{{imgur.id}} | {{imgur.type}}</md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <md-grid-list cols="2" >
+      <md-grid-tile>
+          <img *ngIf="imgur.type == 'youtube'" src="https://img.youtube.com/vi/{{ imgur.id }}/default.jpg" />
+      </md-grid-tile>
+      <md-grid-tile>
+          <button *ngIf="!operator_togg" md-mini-fab (click)="hide(imgur)"><md-icon>visibility_off</md-icon></button>
+          <button *ngIf="operator_togg" md-mini-fab (click)="hide(imgur,false)"><md-icon>visibility_on</md-icon></button>
+          <button md-mini-fab (click)="create_landing(imgur)"><md-icon>forward</md-icon></button>
+      </md-grid-tile>
+    </md-grid-list>
+  </md-card-content>
+</md-card>

@@ -1,0 +1,27 @@
+<div *ngFor="let cnfg of configs | async">
+<md-input-container  (click)="onEditConfig(cnfg)" class="full-width">
+    <input class="full-width" mdInput [placeholder]="cnfg.name" 
+    [disabled]="cnfg.$key != enable_congif" [(ngModel)]="cnfg.value">
+</md-input-container>
+<button md-button (click)="onSaveConfig(cnfg)" *ngIf="cnfg.$key == enable_congif">Save Config</button>
+</div>
+
+<hr/>
+
+<md-input-container class="example-full-width">
+  <input mdInput placeholder="New Config"  [(ngModel)]="config_name" >
+</md-input-container>
+
+<button md-raised-button (click)="new_config(config_name)">Add</button>
+
+<div> 
+  <hr/>
+  <h3>Random Text </h3>  
+  <button md-mini-fab ngxClipboard [cbContent]="randtext_copy" (cbOnSuccess)="new_randtext_copy()"><md-icon>content_copy</md-icon></button>
+</div>
+<hr/>
+
+<div>
+  <textarea mdInput [(ngModel)]="randtext" rows="3" style="direction: rtl;"></textarea>
+</div>
+<button md-raised-button (click)="new_randtext(randtext)">Add Random Text</button>

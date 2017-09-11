@@ -1,0 +1,88 @@
+<h1 *ngIf="! pages_mode">Persons</h1>
+<h1 *ngIf="pages_mode">Pages</h1>
+
+<div class="buttons-row">
+  <button *ngFor="let tag of tags_list" 
+  (click)="onSetTag(tag)"
+  md-raised-button>{{tag}}</button>
+</div>
+
+<ng-container *ngIf="! pages_mode">
+<md-card  class="person-card" *ngFor="let person of persons | async 
+| listItemAttr : {key:'tags'}:{key:curr_tag,value:1} 
+| listItemAttr : {key:'tags'}:{key:sub_tag,value:sub_tag_value} ">
+  <md-card-header [routerLink]="['/person', person.$key]">
+    
+    <img md-card-avatar class="card-header-image" src="{{person.image.url}}">
+      
+    <md-card-title>{{person.displayName}}</md-card-title>
+    <md-card-subtitle>{{person.circledByCount}}</md-card-subtitle>
+  </md-card-header>
+
+  <md-card-content>
+      <div>{{person.last_updated?.updated_ts | timeAgo}} 
+        <a href="https://plus.google.com/{{person.id}}">G+</a>
+      </div>
+      <hr/>
+      <div (click)="_prompt('notes',person)" class="editable-txt">{{person.notes || "&nbsp;"}} _</div>
+    <hr/>
+    <div>{{person.email}}</div>
+    <hr/>
+    <div (click)="_prompt('pass',person)" class="editable-txt">{{person.pass || "&nbsp;"}}</div>
+  </md-card-content>
+  <md-card-actions>
+    <button md-mini-fab (click)="refresh(person)"><md-icon>refresh</md-icon></button>
+    <button md-mini-fab (click)="delete(person)"><md-icon>delete_forever</md-icon></button>
+    <button md-mini-fab (click)="add_to_selenuim(person)"><md-icon>add_to_queue</md-icon></button>
+    <button md-mini-fab (click)="refresh_assign(person)"><md-icon>brightness_auto</md-icon></button>
+  </md-card-actions>
+</md-card>
+<br/><br/>
+<hr/>
+<br/>
+<md-input-container >
+  <input mdInput placeholder="New Person"  [(ngModel)]="new_person_id" >
+</md-input-container>
+<md-input-container >
+  <input mdInput placeholder="New Person Email"  [(ngModel)]="new_person_email" >
+</md-input-container>
+
+<button md-raised-button (click)="new_person(new_person_id,curr_tag,new_person_email)">Add</button>
+
+</ng-container>
+
+<ng-container *ngIf=" pages_mode">
+<md-card class="person-card" *ngFor="let person of persons | async 
+| listItemAttr : {key:'tags'}:{key:curr_tag,value:1} 
+| listItemAttr : {key:'tags'}:{key:sub_tag,value:sub_tag_value} ">
+  <md-card-header [routerLink]="['/person', person.$key]">
+    
+    <img md-card-avatar class="card-header-image" src="{{person.image.url}}">
+      
+    <md-card-title>{{person.displayName}}</md-card-title>
+    <md-card-subtitle>{{person.circledByCount}}</md-card-subtitle>
+  </md-card-header>
+
+  <md-card-content>
+      <div>{{person.last_updated?.updated_ts | timeAgo}} 
+        <a href="https://plus.google.com/{{person.id}}">G+</a>
+      </div>
+      <hr/>
+    <div>{{person.notes || "&nbsp;"}}</div>
+    <hr/>
+    <div  style="padding: 3px;background-color: #7c9ee6;border-radius: 8px;">
+        <a style="color:white;font-weight: bold;text-decoration: none;" href="https://plus.google.com/{{ person.parent.id }}">
+          <img width="30" src="{{person.parent.img}}" alt="" style="margin: 0 3px;border-radius: 50%;" > 
+          {{person.parent.name}}
+        </a> 
+    </div>
+
+  </md-card-content>
+  <md-card-actions>
+    <button md-mini-fab (click)="refresh(person)"><md-icon>refresh</md-icon></button>
+    <button md-mini-fab (click)="delete(person)"><md-icon>delete_forever</md-icon></button>
+    <button md-mini-fab (click)="add_to_selenuim(person)"><md-icon>add_to_queue</md-icon></button>
+    <button md-mini-fab (click)="refresh_assign(person)"><md-icon>brightness_auto</md-icon></button>
+  </md-card-actions>
+</md-card>
+</ng-container>

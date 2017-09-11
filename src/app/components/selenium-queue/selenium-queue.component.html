@@ -1,0 +1,16 @@
+<h2>Device : <span (click)="_prompt('device')" class="editable-txt">{{device || "__SET_DEVICE__"}}</span></h2>
+
+{{respo | json }}
+
+<div *ngFor="let item of queue | async">
+<pre>{{ item | json }}</pre>
+<button md-mini-fab (click)="add_todo(item,'publish_text')"><md-icon>add</md-icon></button>
+<button md-mini-fab (click)="selenium_request(item)">
+    <md-icon *ngIf="item.todo == 'plus'">play_arrow</md-icon>
+    <md-icon *ngIf="item.todo == 'ready'">fast_forward</md-icon>
+    <md-icon *ngIf="item.todo == 'ready' || item.todo == 'quit'">stop</md-icon>
+</button>
+<button md-mini-fab (click)="remove(item)"><md-icon>delete_forever</md-icon></button>
+</div>
+
+<div [appInitPlay]="loglog"> inito </div>

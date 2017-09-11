@@ -1,0 +1,41 @@
+<pre>
+  {{ person  | json }}
+</pre>
+<div (click)="onSetData()">{{ person?.displayName  }}</div>
+
+<button md-button (click)="onGoBack()">Go Back</button>
+
+<hr/>
+
+<md-card class="person-card" *ngFor="let page of pages | async ">
+  <md-card-header >
+    <img md-card-avatar class="card-header-image" src="{{page.image.url}}">
+    <md-card-title>{{page.displayName}}</md-card-title>
+    <md-card-subtitle>{{page.circledByCount}}</md-card-subtitle>
+  </md-card-header>
+
+  <md-card-content>
+      <div>{{page.last_updated?.updated_ts | timeAgo}} 
+        <a href="https://plus.google.com/{{page.id}}">G+</a>
+      </div>
+      <hr/>
+    <div>{{page.notes || "&nbsp;"}}</div>
+    <hr/>
+    <div  style="padding: 3px;background-color: #7c9ee6;border-radius: 8px;">
+        <a style="color:white;font-weight: bold;text-decoration: none;" href="https://plus.google.com/{{ page.parent.id }}">
+          <img width="30" src="{{page.parent.img}}" alt="" style="margin: 0 3px;border-radius: 50%;" > 
+          {{page.parent.name}}
+        </a> 
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <button md-mini-fab (click)="save_pages(page.id)"><md-icon>save</md-icon></button>
+  </md-card-actions>
+</md-card>
+
+<hr/>
+
+<md-input-container >
+  <input mdInput placeholder="New Person's Page"  [(ngModel)]="new_page_id" >
+</md-input-container>
+<button md-raised-button (click)="new_page(new_page_id)">Add</button>

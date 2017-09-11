@@ -1,0 +1,36 @@
+<md-slide-toggle  (ngModelChange)="operator_togg_change($event)" [ngModel]="operator_togg"> Show In-Active </md-slide-toggle>
+
+<md-card  *ngFor="let landing of landings | async | reverse | listItemAttr : {key:'active',value: 'off', operator: operator} ">
+  <md-card-header [routerLink]="">
+    <md-card-title>
+      <b>
+        <a href="https://goo.gl/{{landing.ld}}+">{{landing.ld}}+</a>
+        ({{landing.gcount}})
+      </b>
+      | {{landing.type}}
+    </md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <md-grid-list cols="2" >
+      <md-grid-tile>
+          <img  src="{{ landing.thumb }}" />
+      </md-grid-tile>
+      <md-grid-tile>
+          <button *ngIf="!operator_togg" md-mini-fab (click)="hide(landing)"><md-icon>visibility_off</md-icon></button> 
+          <button *ngIf="operator_togg" md-mini-fab (click)="hide(landing,false)"><md-icon>visibility_on</md-icon></button> 
+
+          &nbsp; <button md-mini-fab ngxClipboard [cbContent]="random_url+'/'+landing.imgur+'/'+landing.ld" (cbOnSuccess)="randomize()"><md-icon>content_copy</md-icon></button> 
+          &nbsp; <button md-mini-fab (click)="gcount(landing,false)">gc</button>
+
+      </md-grid-tile>
+    </md-grid-list>
+
+    <div *ngFor="let person of landing.persons | nestedList" style="padding: 3px;background-color: #7c9ee6;border-radius: 8px;">
+        <a style="color:white;font-weight: bold;text-decoration: none;" href="https://plus.google.com/{{ person.id }}">
+          <img width="30" src="{{person.img}}" alt="" style="margin: 0 3px;border-radius: 50%;" > 
+          {{person.name}}
+        </a> 
+    </div>
+
+  </md-card-content>
+</md-card>
